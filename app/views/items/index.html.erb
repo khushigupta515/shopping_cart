@@ -1,0 +1,66 @@
+<html>
+<head>
+  <script>
+  </script>
+</head>
+<body >
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  <table>
+  <caption>My items</caption>
+  <tr>
+    <th>Index</th>
+    <th>Item</th>
+    <th>Image</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Subtotal</th>
+  </tr>
+    <%count = 1%>
+    <% @items.each do |item| %>
+      <tr>
+        <td> 
+              <%=count%>
+        </td> 
+        <td> 
+              <%= item.title %>
+        </td>  
+        <td> 
+              <% if item.avatar.attached? %>
+                <%= image_tag item.avatar.variant(resize_to_fit: [300, 300]) %>
+              <% else%> 
+                <%= image_tag "quiz-bubble.png", height: 200 %> 
+              <% end %>
+        </td>
+        <td > 
+              <%= item.quantity%>
+              <%= button_to 'Increase Quantity', cart_item_path(cart_id:@cart.id,id:item.id,change:"inc"),method: :put %>
+              <% if item.quantity !=1 %>
+                <%= button_to 'Decrease Quantity', cart_item_path(cart_id:@cart.id,id:item.id,change:"dec"),method: :put %>
+              <% end %>  
+        </td>
+        <td> 
+              <%= item.price%>
+        </td>
+        <td > 
+              <%= item.price*item.quantity %>
+              <%= button_to 'Remove Item', cart_item_path(cart_id:@cart.id,id:item.id),method: :delete %>
+        </td>      
+      </tr>
+    <% count+=1 %>
+    <% end %>
+  </table>
+  <%= button_to 'Add Item', new_cart_item_path(cart_id:@cart.id),method: :get%>
+  <%= button_to 'Remove Cart', cart_path(id:@cart.id),method: :delete %>
+  <%= button_to 'View all Carts', root_path() ,method: :get%>
+  <div>
+    <span>CART TOTAL</span>
+    <span>
+          <%=@cart.total %>
+    </span>
+  </div>
+</body>
+</html>

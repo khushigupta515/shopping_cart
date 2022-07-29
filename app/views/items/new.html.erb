@@ -1,0 +1,26 @@
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+<%= form_with model: [@cart, @cart.items.build] do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :quantity %><br>
+    <%= form.number_field :quantity,:min => 1 %>
+  </p>
+  <p>
+    <%= form.label :avatar %><br>
+    <%= form.file_field :avatar %>
+  </p>
+  <p>
+    <%= form.label :price %><br>
+    <%= form.number_field :price ,:min => 0 %>
+  </p>
+  <p>
+    <%= form.submit "CREATE" %>
+  </p>
+<% end %>

@@ -1,0 +1,32 @@
+<html>
+<head></head>
+<body>
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  <table>
+    <caption>My Carts</caption>
+    <%count = 1%>
+    <tr>
+    <td>Cart Index</td>
+    <td>Cart Title</td>
+    <td>Actions</td>
+    </tr>
+      <% @carts.each do |cart| %>
+      <tr>
+      <td><%=count%></td>
+        <td> 
+          <%= link_to  cart.title ,cart_items_path(cart_id:cart.id)%>
+        </td>
+        <td>
+        <%= button_to 'Remove Cart', cart_path(id:cart.id),method: :delete %>
+        </td>
+      </tr>
+      <% count+=1 %>
+      <% end %>
+  </table>
+<%= button_to 'Add Cart', new_cart_path ,method: :get %>
+</body>
+</html>
